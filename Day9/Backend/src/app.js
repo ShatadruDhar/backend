@@ -2,9 +2,11 @@ const express=require("express")
 const cors=require("cors")
 const app=express()
 const noteModel=require("./models/note.model")
+const path=require("path")
 app.use(express.json())
 app.use(cors())
-
+app.use(express.static("./public"))
+//used so that the index.html file can get the js file and css file
 app.post("/notes",async  (req,res)=>{
     const {title,description}=req.body
     await noteModel.create({
@@ -42,8 +44,11 @@ app.patch("/notes/:id",async  (req,res)=>{
     })
 })
 
+app.use('*name',(req,res)=>{
+ res.sendFile(path.join(__dirname,"..","/public/index.html"))
+})
 
-
+//this is done so that we can run the frontend file on my backend url by just loading the index.html on wild card apis(Apis that does not exist) 
 
 
 module.exports=app

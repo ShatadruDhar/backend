@@ -41,25 +41,26 @@ function deleteNote(id){
   })
 
 }
-const [desc,setDesc]=useState("")
+const [SelectedId,setSelectedId]=useState()
 const [showForm,setShowForm]=useState(false)
 function UpdateHandler(e){
 e.preventDefault()
+console.log(e.target.elements)
 const {desc}=e.target.elements
-setDesc(desc.value)
-setShowForm(false)
+
+ axios.patch("http://localhost:3000/notes/"+SelectedId,{
+    description:desc.value
+  })
+  .then((res)=>{
+    fetchNotes()
+    setShowForm(false)
+  })
+
 
 }
 function UpdateNote(id){
   setShowForm(true)
-
-  axios.patch("http://localhost:3000/notes/"+id,{
-    description:desc
-  })
-  .then((res)=>{
-    fetchNotes()
-  })
-
+  setSelectedId(id);
 }
   return (
     <div>
@@ -70,9 +71,9 @@ function UpdateNote(id){
       </form>
       <div className="notes">
       { showForm &&(
-                  <form>
+                  <form onSubmit={UpdateHandler}>
             <input type='text' name='desc' placeholder='Write new description'></input>
-            <button onSubmit={UpdateHandler}>Update Desription</button>
+            <button type='submit'>Update Desription</button>
           </form>
        )
       }
