@@ -42,17 +42,17 @@ function deleteNote(id){
 
 }
 const [desc,setDesc]=useState("")
+const [showForm,setShowForm]=useState(false)
 function UpdateHandler(e){
 e.preventDefault()
 const {desc}=e.target.elements
 setDesc(desc.value)
+setShowForm(false)
 
 }
 function UpdateNote(id){
-  <form>
-    <input type='text' name='desc' placeholder='Write new description'></input>
-    <button onSubmit={UpdateHandler}>Update Desription</button>
-  </form>
+  setShowForm(true)
+
   axios.patch("http://localhost:3000/notes/"+id,{
     description:desc
   })
@@ -69,6 +69,13 @@ function UpdateNote(id){
         <button>Create note</button> 
       </form>
       <div className="notes">
+      { showForm &&(
+                  <form>
+            <input type='text' name='desc' placeholder='Write new description'></input>
+            <button onSubmit={UpdateHandler}>Update Desription</button>
+          </form>
+       )
+      }
         {
           note.map(note=>{
             return <div className="note">
