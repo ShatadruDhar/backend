@@ -45,7 +45,7 @@ const [SelectedId,setSelectedId]=useState()
 const [showForm,setShowForm]=useState(false)
 function UpdateHandler(e){
 e.preventDefault()
-console.log(e.target.elements)
+
 const {desc}=e.target.elements
 
  axios.patch("http://localhost:3000/notes/"+SelectedId,{
