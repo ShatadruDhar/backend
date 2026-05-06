@@ -6,7 +6,7 @@ import axios from 'axios'
 const App = () => {
   const [note,setnote]=useState([])
   function fetchNotes(){
-      axios.get("http://localhost:3000/notes")
+      axios.get("https://cohort-2-xsdc.onrender.com/notes")
   .then((res)=>{
     setnote(res.data.note)    
   })
@@ -25,7 +25,7 @@ function submitHandler(e){
   e.preventDefault()
  const {title,description}=e.target.elements
  
- axios.post("http://localhost:3000/notes",{
+ axios.post("https://cohort-2-xsdc.onrender.com/notes",{
   title:title.value,
   description:description.value
  })
@@ -35,7 +35,7 @@ function submitHandler(e){
  })
 }
 function deleteNote(id){
-  axios.delete(`http://localhost:3000/notes/${id}`)
+  axios.delete(`https://cohort-2-xsdc.onrender.com/notes/${id}`)
   .then((res)=>{
     fetchNotes()
   })
@@ -48,7 +48,7 @@ e.preventDefault()
 
 const {desc}=e.target.elements
 
- axios.patch("http://localhost:3000/notes/"+SelectedId,{
+ axios.patch("https://cohort-2-xsdc.onrender.com/notes/"+SelectedId,{
     description:desc.value
   })
   .then((res)=>{
