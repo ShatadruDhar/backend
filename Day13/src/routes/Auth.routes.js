@@ -54,4 +54,8 @@ Authrouter.get("/get-me",async(req,res)=>{
    })
 })
 
+Authrouter.post("/login",(req,res)=>{
+    const {}
+
+})
 module.exports=Authrouter
