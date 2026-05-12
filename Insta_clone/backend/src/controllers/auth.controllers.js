@@ -2,7 +2,7 @@
 const userModel = require("../models/user.models")
 
 const jwt=require("jsonwebtoken")
-const crypto=require("crypto")
+const bcrypt=require("bcryptjs")
 
 async function  registerController(req,res){
   const {email,password,username,profilepic,bio}=req.body
@@ -28,7 +28,7 @@ async function  registerController(req,res){
         message:"User Already Exists"+(UserAlreadyExists.email==email?"Email Already Exists":"Username Already Exists")
     })
   }
-  const hash=crypto.createHash("md5").update(password).digest("hex")
+  const hash=await bcrypt.hash(password,10)
   const user=await userModel.create({
     username,email,password:hash,profilepic,bio
   })
@@ -66,8 +66,8 @@ if(!userExists){
         message:"User doesnot Exist"
     })
 }
-const hash=crypto.createHash("md5").update(password).digest("hex")
-if(userExists.password!=hash){
+const PasswordValid=bcrypt.compare(password,userExists.password)
+if(!PasswordValid){
     return res.status(409).json({
         message:"Incorrect password"
     })
