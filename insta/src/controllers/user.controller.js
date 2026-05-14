@@ -1,9 +1,10 @@
 const userModel=require("../models/users.models")
 const bcryptjs=require("bcryptjs")
 const jwt=require("jsonwebtoken")
+
 async function RegisterUser(req,res){
 const {username,password,profilepic,bio,email}=req.body
-const userExists=userModel.findOne({
+const userExists=await userModel.findOne({
     $or:[{username},{email}]
 })
 if(userExists){
@@ -11,12 +12,12 @@ if(userExists){
     message:"Same username or email cant have another account"
  })
 }
-const hash=bcryptjs.hash(password,10)
-const user=userModel.create({
+const hash=await bcryptjs.hash(password,10)
+const user=await userModel.create({
     email,username,password:hash,profilepic,bio
 })
 const token=jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:"1d"})
-res.cookie("json_token",token)
+res.cookie("jwt_token",token)
 res.status(201).json({
     message:"User registered successfully",
     user:{
@@ -30,7 +31,7 @@ res.status(201).json({
 
 async function LoginUser(req,res){
   const {username,email,password}=req.body
-  const user=userModel.findOne({
+  const user=await userModel.findOne({
     $or:[{username},{email}]
   })
   if(!user){
@@ -38,14 +39,14 @@ async function LoginUser(req,res){
     message:"user doesnot exist"
    })
   }
-  const passwordValid=bcryptjs.compare(user.password,password)
+  const passwordValid=bcryptjs.compare(password,user.password)
   if(!passwordValid){
      return res.status(409).json({
     message:"Password Invalid"
    })
   }
   const token=jwt.sign({id:user._id},process.env.JWT_SECRET)
-  res.cookie("json_token",token)
+  res.cookie("jwt_token",token)
   res.status(200).json({
     message:"User logged in successfully",
     user:{
@@ -58,9 +59,9 @@ async function LoginUser(req,res){
 }
 
 async function getme(req,res){
-    const token=res.cookies.jwt_token
+    const token=req.cookies.jwt_token
     const decoded=jwt.verify(token,process.env.JWT_SECRET)
-    const user=userModel.findById({id:decoded.id})
+    const user=await userModel.findById({id:decoded.id})
 }
 
 module.exports={
