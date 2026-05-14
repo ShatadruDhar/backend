@@ -10,7 +10,7 @@ async function PostController(req,res){
         file:await toFile(Buffer.from(req.file.buffer),'file'),
         fileName: 'test' 
     })
-    re.send(file)
+    res.send(file)
     // const post=postModel.create({
     //     caption,image
     // })

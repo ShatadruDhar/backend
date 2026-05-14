@@ -18,7 +18,7 @@ async function  registerController(req,res){
 //         message:"Account with this username already exists"
 //     })
 //   }
-  const UserAlreadyExists=userModel.findOne({
+  const UserAlreadyExists= await userModel.findOne({
     $or:[
         {email},{username}
     ]
@@ -32,7 +32,7 @@ async function  registerController(req,res){
   const user=await userModel.create({
     username,email,password:hash,profilepic,bio
   })
-  const token=jwt.sign({email:user.email,username:user.username,id:user._id},process.env.JWT_SECRET,{expiresIn:"1d"})
+  const token=await jwt.sign({email:user.email,username:user.username,id:user._id},process.env.JWT_SECRET,{expiresIn:"1d"})
   res.cookie("jwt_token",token)
   res.status(201).json({
     message:"User registered successfully",
@@ -50,13 +50,13 @@ async function  registerController(req,res){
 function checktokenController (req,res){
     const token=req.cookies.jwt_token
     const decoded=jwt.verify(token,process.env.JWT_SECRET)
-    const user=userModel.findById({id:decoded.id})
+    const user=await userModel.findById({id:decoded.id})
 
 }
 
 async function loginController (req,res){
 const {email,password,username}=req.body
-const userExists=userModel.findOne({
+const userExists=await userModel.findOne({
     $or:[
         {email},{username}
     ]
