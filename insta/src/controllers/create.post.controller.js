@@ -19,7 +19,7 @@ const file=await client.files.upload({
 const post=await postModel.create({
     caption:req.body.caption,
     pic:file.url,
-    user:decoded.id
+    user:req.user.id
 })
 
 res.status(201).json({
@@ -27,32 +27,18 @@ res.status(201).json({
     post
 })
 
-
 }
 
 async function getPost(req,res){
-    const token=req.cookies.jwt_token
-    if(!token){
-    return res.status(401).json({
-        message:"No token present",
-    })
-    let decoded=null
-    try{
-        decoded=jwt.verify(token,process.env.JWT_SECRET)
-    }
-    catch(err){
-        return res.status(401).json({
-            message:"Unauthorized Access"
-        })
-    }
-    const posts=postModel.find({user:decoded.id})
+    
+    const posts=postModel.find({user:req.user.id})
     res.status(200).json({
         message:"Posts fetched successfully",
         posts
 
     })
 }
-}
+
 
 async function getParticularPost(req,res){
 const id=req.params.postId
@@ -65,22 +51,8 @@ catch(err){
     })
 }
 
-const token=req.cookies.jwt_token
-if(!token){
-    return res.status(401).json({
-        message:"No token present",
-    })
-}
-    let decoded=null
-    try{
-        decoded=jwt.verify(token,process.env.JWT_SECRET)
-    }
-    catch(err){
-        return res.status(401).json({
-            message:"Unauthorized Access"
-        })
-    }
- if(post.user.toString()==decoded.id){
+
+ if(post.user.toString()==req.user.id){
     return res.status(200).json({
         message:"This is your requested post",
         post
