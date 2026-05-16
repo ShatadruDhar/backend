@@ -7,7 +7,7 @@ async function identifyUser(req,res,next){
         })
     }
     let decoded=null
-    try{ decoded=await jwt.verify(token,process.env.JWT_SECRET)
+    try{ decoded= jwt.verify(token,process.env.JWT_SECRET)
     
     }
     catch(err){
@@ -17,6 +17,7 @@ async function identifyUser(req,res,next){
     }
     
     req.user=decoded
+    next()
 }
 
 module.exports=identifyUser

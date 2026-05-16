@@ -31,7 +31,7 @@ res.status(201).json({
 
 async function getPost(req,res){
     
-    const posts=postModel.find({user:req.user.id})
+    const posts=await postModel.find({user:req.user.id})
     res.status(200).json({
         message:"Posts fetched successfully",
         posts
