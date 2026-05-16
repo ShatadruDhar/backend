@@ -9,23 +9,7 @@ const client=new imagekit({
 })
 async function postController(req,res){
 
-const token=req.cookies.jwt_token
-if(!token){
-    return res.status(401).json({
-        message:"Unauthorized Access"
-    })
-}
-let decoded=null
-try{ decoded=await jwt.verify(token,process.env.JWT_SECRET)
 
-}
-catch(err){
-    return res.status(401).json({
-        message:"User not authorized"
-    })
-}
-
-console.log(decoded.id)
 const file=await client.files.upload({
     file:await toFile(Buffer.from(req.file.buffer),"file"),
     fileName:"test",

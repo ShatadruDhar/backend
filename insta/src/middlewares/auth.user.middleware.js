@@ -1,0 +1,21 @@
+async function identifyUser(req,res,next){
+    const token=req.cookies.jwt_token
+    if(!token){
+        return res.status(401).json({
+            message:"Unauthorized Access"
+        })
+    }
+    let decoded=null
+    try{ decoded=await jwt.verify(token,process.env.JWT_SECRET)
+    
+    }
+    catch(err){
+        return res.status(401).json({
+            message:"User not authorized"
+        })
+    }
+    
+    req.user=decoded
+}
+
+module.exports=identifyUser
