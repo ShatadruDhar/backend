@@ -16,7 +16,7 @@ const hash=await bcryptjs.hash(password,10)
 const user=await userModel.create({
     email,username,password:hash,profilepic,bio
 })
-const token=jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:"1d"})
+const token=jwt.sign({id:user._id,username:user.username},process.env.JWT_SECRET,{expiresIn:"1d"})
 res.cookie("jwt_token",token)
 res.status(201).json({
     message:"User registered successfully",
@@ -45,7 +45,7 @@ async function LoginUser(req,res){
     message:"Password Invalid"
    })
   }
-  const token=jwt.sign({id:user._id},process.env.JWT_SECRET)
+  const token=jwt.sign({id:user._id,username:user.username},process.env.JWT_SECRET)
   res.cookie("jwt_token",token)
   res.status(200).json({
     message:"User logged in successfully",
