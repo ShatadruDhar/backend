@@ -63,4 +63,36 @@ async function unfollow(req,res){
     })
 }
 
-module.exports={follow,unfollow}
+async function respondToFollow(req, res) {
+  try {
+    const followee = req.user.username        // logged-in user (receiving the request)
+    const follower = req.params.username      // who sent the request
+    const { status } = req.body               // "accepted" or "rejected"
+
+    // 1. Validate the status value
+    if (!["accepted", "rejected"].includes(status)) {
+      return res.status(400).json({ message: "Status must be 'accepted' or 'rejected'" })
+    }
+
+    // 2. Find the pending request and update it
+    const updatedRecord = await followModel.findOneAndUpdate(
+      { follower, followee, status: "pending" },
+      { status },
+      { new: true }
+    )
+
+    // 3. If nothing was found — either doesn't exist or already responded
+    if (!updatedRecord) {
+      return res.status(404).json({ message: "No pending follow request found from this user" })
+    }
+
+    res.status(200).json({
+      message: `Follow request ${status}`,
+      updatedRecord,
+    })
+  } catch (err) {
+    res.status(500).json({ message: "Something went wrong", error: err.message })
+  }
+}
+
+module.exports={follow,unfollow,respondToFollow}
