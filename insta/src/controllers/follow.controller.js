@@ -27,7 +27,7 @@ async function follow(req,res){
     }
     const followRecord=await followModel.create({follower:follower,followee:followee})
     res.status(201).json({
-        message:"you followed someone",
+        message:`Your Follow Request was sent to ${followee}`,
         followRecord
     })
 }
@@ -54,8 +54,12 @@ async function unfollow(req,res){
         })
     }
     await followModel.deleteOne({follower:follower,followee:followee})
+    const actionMessage = existingRecord.status === "pending"
+      ? `Follow request to ${followee} cancelled`
+      : `You unfollowed ${followee}`
+
     res.status(200).json({
-        message:`You unfollowed ${followee}`
+        message:actionMessage
     })
 }
 
