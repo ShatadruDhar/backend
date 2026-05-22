@@ -22,8 +22,10 @@ const LoginForm = () => {
       console.log(res)
       navigate("/")
     })
-    
-
+    .catch((err)=>{
+      console.error("Login failed:", err)
+      alert("Login failed: " + (err.response?.data?.message || err.message))
+    })
   }
   return (
     <div>
