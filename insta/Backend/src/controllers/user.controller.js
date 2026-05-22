@@ -59,10 +59,17 @@ async function LoginUser(req,res){
 }
 
 async function getme(req,res){
-    const token=req.cookies.jwt_token
-    const decoded=jwt.verify(token,process.env.JWT_SECRET)
-    const user=await userModel.findById({id:decoded.id})
-}
+    const userId=req.user.id
+    const user=await userModel.findById(userId)
+    res.status(200).json({
+        user:{
+            username:user.username,
+            email:user.email,
+            bio:user.bio,
+            profilepic:user.profilepic
+        }
+    }) 
+} 
 
 module.exports={
     RegisterUser,LoginUser,getme

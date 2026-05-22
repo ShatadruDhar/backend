@@ -3,23 +3,14 @@ import LoginForm from './Login'
 import { Link } from 'react-router'
 import axios from "axios"
 import { useState } from 'react'
+import ApiLayer from '../services/auth.api'
 const RegisterForm = () => {
   const [username,setUsername]=useState("")
   const [email,setEmail]=useState("")
   const [password,setPassword]=useState("")
   function SubmitHandler(e){
     e.preventDefault()
-    
-    axios.post("http://localhost:3000/api/auth/register",{
-      username,
-      email,
-      password
-    },{withCredentials:true}) // by default axios doesnot store cookies , withCredentials:true enables axios to do it
-    .then((res)=>{
-      console.log(res.data)
-
-    })
-    
+    ApiLayer.register(username,password,email)
   }
   return (
     <div>
