@@ -4,7 +4,7 @@ const api=axios.create({
     withCredentials:true
 })
 //a feature by axios which enables us to initialize some basic things that repeat in an axios and initialize it previously and use directly
-export async function register(username,password,email) {
+export async function register(username, email, password) {
     try{
         const response=await api.post("register",{
       username,
@@ -19,7 +19,7 @@ export async function register(username,password,email) {
 }
 export async function login(username,password) {
    try{
-     const response=api.post("login",{
+     const response=await api.post("login",{
       username,password
     })
     return response.data
@@ -30,7 +30,7 @@ export async function login(username,password) {
    }
 }
 
-async function getme(){
+export async function getme(){
     try{
         const response=await api.get("/get-me")
         return response.data

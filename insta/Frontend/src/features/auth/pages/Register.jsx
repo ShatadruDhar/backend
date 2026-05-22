@@ -3,14 +3,19 @@ import LoginForm from './Login'
 import { Link } from 'react-router'
 import axios from "axios"
 import { useState } from 'react'
-import ApiLayer from '../services/auth.api'
+import { UseAuth } from '../hooks/UseAuth'
 const RegisterForm = () => {
   const [username,setUsername]=useState("")
   const [email,setEmail]=useState("")
   const [password,setPassword]=useState("")
+  const {register}=UseAuth()
   function SubmitHandler(e){
     e.preventDefault()
-    ApiLayer.register(username,password,email)
+    handleregister(username,email,password)
+    .then((res)=>{
+      console.log(res)
+    })
+    
   }
   return (
     <div>

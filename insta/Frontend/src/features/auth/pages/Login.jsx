@@ -1,16 +1,28 @@
 import React from 'react'
 import '../styles/form.scss'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import RegisterForm from './Register'
 import { useState } from 'react'
 import axios from "axios"
-import ApiLayer from '../services/auth.api'
+import { UseAuth } from '../hooks/UseAuth.jsx'
 const LoginForm = () => {
   const [password,setPassword]=useState("")
   const [username,setUsername]=useState("")
+  const {handlelogin,loading}=UseAuth()
+  const navigate=useNavigate()
+  if(loading){
+    return (
+      <h1>Loading.....</h1>
+    )
+  }
   function submitHandler(e){
     e.preventDefault()
-    ApiLayer.login(username,password)
+    handlelogin(username,password)
+    .then((res)=>{
+      console.log(res)
+      navigate("/")
+    })
+    
 
   }
   return (
