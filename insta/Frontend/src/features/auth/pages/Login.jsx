@@ -24,7 +24,6 @@ const LoginForm = () => {
     })
     .catch((err)=>{
       console.error("Login failed:", err)
-      alert("Login failed: " + (err.response?.data?.message || err.message))
     })
   }
   return (

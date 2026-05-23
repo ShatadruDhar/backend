@@ -8,7 +8,10 @@ const RegisterForm = () => {
   const [username,setUsername]=useState("")
   const [email,setEmail]=useState("")
   const [password,setPassword]=useState("")
-  const {register}=UseAuth()
+  const {handleregister,loading}=UseAuth()
+  if(loading){
+    return(<h1>Loading.....</h1>)
+  }
   function SubmitHandler(e){
     e.preventDefault()
     handleregister(username,email,password)

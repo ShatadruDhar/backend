@@ -1,4 +1,5 @@
 import axios from 'axios'
+//api layer
 const api=axios.create({
     baseURL:"http://localhost:3000/api/auth/",
     withCredentials:true
