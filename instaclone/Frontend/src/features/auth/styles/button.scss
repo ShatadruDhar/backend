@@ -1,0 +1,14 @@
+.button{
+    padding-inline: 1rem;
+    padding-block:0.75rem;
+    border-radius: 1rem;
+    transition: all 0.3s ease-out ;
+    cursor: pointer;
+    &.auth-button{
+        color: whitesmoke;
+        background-color: rgb(233, 43, 43);
+    }
+    &:active{
+        transform: scale(90%);
+    }
+}
