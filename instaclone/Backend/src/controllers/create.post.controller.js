@@ -65,7 +65,14 @@ catch(err){
  }
 }
 
+async function getFeed(req,res){
+ const posts=await postModel.find().populate("user")
+ res.status(200).json({
+    message:"posts fetched successfully",
+    posts
+ })
+}
 
 
 
-module.exports={postController,getPost,getParticularPost}
+module.exports={postController,getPost,getParticularPost,getFeed}

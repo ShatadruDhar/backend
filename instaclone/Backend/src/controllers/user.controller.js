@@ -33,7 +33,7 @@ async function LoginUser(req,res){
   const {username,email,password}=req.body
   const user=await userModel.findOne({
     $or:[{username},{email}]
-  })
+  }).select("+password")
   if(!user){
      return res.status(409).json({
     message:"user doesnot exist"
