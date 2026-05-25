@@ -3,8 +3,8 @@ import { PostContext } from "../postContext";
 
 import React from 'react'
 
-const UseFeed = async() => {
-  const context=await useContext(PostContext)
+const UseFeed = () => {
+  const context= useContext(PostContext)
   return context
 
 }

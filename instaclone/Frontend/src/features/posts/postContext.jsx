@@ -4,11 +4,12 @@ import { getFeed } from "./services/FeedPost";
 
 export const PostContext=createContext()
 
-export async function PostProvider({children}){
+export function PostProvider({children}){
  const [loading,setLoading]=useState(false)
  const [posts,setPosts]=useState(null)
+ const [feed,setFeed]=useState(null)
  
- async function handleFeed(){
+  const handleFeed=async ()=>{
     setLoading(true)
     try{
      const posts=await getFeed()
@@ -23,7 +24,7 @@ export async function PostProvider({children}){
     }
  }
  return (
-    <PostContext.Provider value={loading,posts,handleFeed}>
+    <PostContext.Provider value={{loading,posts,handleFeed}}>
         {children}
     </PostContext.Provider>
  )
