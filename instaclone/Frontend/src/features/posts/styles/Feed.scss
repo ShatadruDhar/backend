@@ -1,0 +1,92 @@
+
+main{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+    .posts{
+        width: 100vw;
+        height: 100vw;
+        display: flex;
+        justify-content: center;
+        .post{
+            padding-inline: 1rem;
+            display: flex;
+            flex-direction: column;
+            width: 400px;
+            background-color:brown;
+            height: fit-content;
+            
+            .top{
+                display: flex;
+                gap:0.5rem;
+                flex-direction: row;
+                padding: 1rem;
+                .username{
+                    margin: none;
+                    margin-block: none;
+                    color: white;
+                }
+            }
+            .profilePhoto{
+                height:2rem;
+                width: 2rem;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+            .img-wrapper{
+                
+                height:2.2rem;
+                width: 2.2rem;
+                border-radius: 50%;
+                object-fit: cover;
+                background: conic-gradient(#feda75,
+        #fa7e1e,
+        #d62976,
+        #962fbf,
+        #4f5bd5,
+        #feda75);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .postPhoto{
+                width: 100%;
+                border-radius: 1rem;
+            }
+            .caption{
+                padding-inline: 1rem;
+                padding-bottom: 1rem;
+            }
+            .icons{
+                margin-block: 0.5rem;
+                    svg{
+                    width: 2rem;
+                    aspect-ratio: 1/1;
+                    color: white;
+                }
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                .left{
+                    display: flex;
+                    gap:0.75rem;
+                    padding-left: 0.25rem;
+                }
+                .right{
+                    display: flex;
+                    margin-left: auto;   
+                }
+             button{
+                background-color: transparent;
+                border: none;
+                outline: none;
+
+             }
+            }
+        }
+    }
+
+}
