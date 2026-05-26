@@ -7,6 +7,7 @@ const { post } = require("../routes/post.routes")
 const client=new imagekit({
     privateKey:process.env.ImageKit_PRIVATE_KEY
 })
+const likeModel=require("../models/likes.model")
 async function postController(req,res){
 
 
@@ -66,11 +67,26 @@ catch(err){
 }
 
 async function getFeed(req,res){
- const posts=await postModel.find().populate("user")
- res.status(200).json({
-    message:"posts fetched successfully",
-    posts
- })
+    const user=req.user
+ const posts = await Promise.all((await postModel.find({}).populate("user").lean())
+        .map(async (post) => {
+            const isLiked = await likeModel.findOne({
+                user: user.username,
+                post: post._id
+            })
+
+            post.isLiked = Boolean(isLiked)
+
+            return post
+        }))
+
+
+
+    res.status(200).json({
+        message: "posts fetched successfully.",
+        posts
+    })
+ 
 }
 
 

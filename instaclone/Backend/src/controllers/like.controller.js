@@ -2,6 +2,7 @@ const likeModel=require("../models/likes.model")
 const postModel = require("../models/post.models")
 
 
+
 async function like(req, res) {
     const postId = req.params.postId
     const username = req.user.username
