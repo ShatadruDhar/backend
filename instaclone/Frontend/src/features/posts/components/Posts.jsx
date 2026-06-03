@@ -28,6 +28,8 @@ const Posts = ({user,post}) => {
                 </div>
             </div>
   )
+
+  
 }
 
 export default Posts
