@@ -3,6 +3,7 @@ import '../styles/Feed.scss'
 import Posts from '../components/Posts'
 import { useEffect } from 'react'
 import UseFeed from '../hooks/UseFeed'
+import Navbar from '../components/Navbar'
 const Feed = () => {
   const {loading,posts,handleFeed}=UseFeed()
   useEffect(()=>{
@@ -20,6 +21,9 @@ const Feed = () => {
     <div>
       <main>
         <div className="feed">
+          <div className="nav">
+            <Navbar/>
+          </div>
             <div className="posts">
               { posts.map(post=>{
                   return (
