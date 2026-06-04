@@ -1,21 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import '../styles/Feed.scss'
 import Posts from '../components/Posts'
-import { useEffect } from 'react'
 import UseFeed from '../hooks/UseFeed'
 import Navbar from '../components/Navbar'
+
 const Feed = () => {
-  const {loading,posts,handleFeed}=UseFeed()
-  useEffect(()=>{
+  const { feed, handleFeed, loading, handleLike, handleUnLike } = UseFeed()
+
+  useEffect(() => {
     handleFeed()
-  },[])
-  if(loading|| !posts){
+  }, [])
+
+  if (loading || !feed) {
     return (
       <h1>Loading...</h1>
     )
   }
-  console.log(posts);
-  
 
   return (
     <div>
@@ -24,13 +24,18 @@ const Feed = () => {
           <div className="nav">
             <Navbar/>
           </div>
-            <div className="posts">
-              { posts.map(post=>{
-                  return (
-                    <Posts user={post.user} post={post}/>
-                  )
-               })}
-            </div>
+          <div className="posts">
+            {feed.map((post) => (
+              <Posts
+                key={post._id}
+                user={post.user}
+                post={post}
+                loading={loading}
+                handleLike={handleLike}
+                handleUnLike={handleUnLike}
+              />
+            ))}
+          </div>
         </div>
       </main>
     </div>

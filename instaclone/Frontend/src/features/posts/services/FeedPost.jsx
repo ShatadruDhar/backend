@@ -1,29 +1,29 @@
-import axios from 'axios'
-const api=axios.create({
-    baseURL:"http://localhost:3000/api/posts/",
-    withCredentials:true
-})
-export async function getFeed(){
- try{
-        const posts=await api.get("feed")
-        return posts.data.posts
-    }
- catch(err){
-   throw err
- }
+import axios from "axios"
 
+const api = axios.create({
+  baseURL: "http://localhost:3000",
+  withCredentials: true,
+})
+
+export async function getFeed() {
+  const response = await api.get("/api/posts/feed")
+  return response.data
 }
 
+export async function createPost(imageFile, caption) {
+  const formData = new FormData()
+  formData.append("image", imageFile)
+  formData.append("caption", caption)
+  const response = await api.post("/api/posts", formData)
+  return response.data
+}
 
- export async function createPost(image,caption){
-    const formData=new FormData()
-    formData.append("image",image)
-    formData.append("caption",caption)
-  try{
-     const post=await api.post("/", formData)
-     return post.data
- }
- catch(err){
-    throw err
- }
+export async function likePost(postId) {
+  const response = await api.post("/api/posts/like/" + postId)
+  return response.data
+}
+
+export async function unLikePost(postId) {
+  const response = await api.post("/api/posts/unlike/" + postId)
+  return response.data
 }

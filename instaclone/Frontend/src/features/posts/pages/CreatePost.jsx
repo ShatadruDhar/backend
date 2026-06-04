@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router'
 const CreatePost = () => {
   const [caption, setCaption]=useState("")
   const PostImageInputFileRef=useRef(null)
-  const {Loading,handleCreatePost}=UseFeed()
+  const { loading, handleCreatePost } = UseFeed()
   const navigate=useNavigate()
   async function handleSubmit(e){
     e.preventDefault()
@@ -14,7 +14,7 @@ const CreatePost = () => {
     await handleCreatePost(caption,file)
     navigate('/feed')
   }
-  if(Loading){
+  if(loading){
     return (
       <div>
         <h1>Creating Post...</h1>
