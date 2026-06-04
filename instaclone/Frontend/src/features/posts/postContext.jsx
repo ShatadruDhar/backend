@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createContext } from "react";
-import { getFeed } from "./services/FeedPost";
+import { getFeed,createPost } from "./services/FeedPost";
 
 export const PostContext=createContext()
 
@@ -23,8 +23,19 @@ export function PostProvider({children}){
      setLoading(false)
     }
  }
+ const handleCreatePost = async (caption, image) => {
+    setLoading(true)
+    try {
+        const response = await createPost(caption, image)
+        return response
+    } catch (err) {
+        throw err
+    } finally {
+        setLoading(false)
+    }
+}
  return (
-    <PostContext.Provider value={{loading,posts,handleFeed}}>
+    <PostContext.Provider value={{loading,posts,handleFeed,handleCreatePost}}>
         {children}
     </PostContext.Provider>
  )
