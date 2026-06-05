@@ -7,7 +7,6 @@ const Navbar = () => {
 
     <div>
       <div className="nav-bar">
-        <p>Instagram</p>
         <button onClick={()=>{
             navigate('/create-post')
         }} className='button'>New Post</button>

@@ -5,6 +5,11 @@ main{
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
+    .feed {
+    display: flex;          // add this
+    align-items: flex-start; // critical for sticky
+    width: 100%;
+    }
 
     .posts{
         width: 100vw;
@@ -13,6 +18,7 @@ main{
         flex-direction: column;
         align-items: center;
         gap:2rem;
+        flex: 1;
         .post{
             padding-inline: 1rem;
             display: flex;

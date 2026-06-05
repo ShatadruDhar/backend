@@ -95,4 +95,20 @@ async function respondToFollow(req, res) {
   }
 }
 
-module.exports={follow,unfollow,respondToFollow}
+async function getfollowers(req,res) {
+     const followee = req.user.username 
+     const followers=await followModel.find({followee,status: "accepted"})
+     res.status(200).json({
+        message:"Got the followers data",
+        followers
+     })
+}
+async function getfollowee(req,res) {
+     const follower = req.user.username 
+     const followee=await followModel.find({follower,status: "accepted"})
+     res.status(200).json({
+        message:"Got the followee data",
+        followee
+     })
+}
+module.exports={follow,unfollow,respondToFollow,getfollowers,getfollowee}

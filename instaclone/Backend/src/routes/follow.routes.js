@@ -7,6 +7,6 @@ const followController=require("../controllers/follow.controller")
 UserRouter.post("/follow/:username",identifyUser,followController.follow)
 UserRouter.post("/unfollow/:username",identifyUser,followController.unfollow)
 UserRouter.patch("/follow/respond/:username", identifyUser, followController.respondToFollow)
-
-
+UserRouter.get("/followers",identifyUser,followController.getfollowers)
+UserRouter.get("/followee",identifyUser,followController.getfollowee)
 module.exports=UserRouter

@@ -1,10 +1,10 @@
 import { useContext, useEffect } from "react"
 import { PostContext } from "../postContext"
-import { getFeed, createPost, likePost, unLikePost } from "../services/FeedPost"
+import { getFeed, createPost, likePost, unLikePost, getfollowers, getfollowee } from "../services/FeedPost"
 
 const UseFeed = () => {
   const context = useContext(PostContext)
-  const { loading, setLoading, feed, setFeed } = context
+  const { loading, setLoading, feed, setFeed,followee,setFollowee,follower,setFollower } = context
 
   const handleFeed = async () => {
     setLoading(true)
@@ -28,6 +28,16 @@ const UseFeed = () => {
   const handleUnLike = async (postId) => {
     await unLikePost(postId)
     await handleFeed()
+  }
+
+  const handleFollowers=async ()=>{
+   const data=await getfollowers()
+   setFollower([data.followers,...follower])
+  }
+  
+  const handleFollowee=async ()=>{
+   const data=await getfollowee()
+   setFollowee([data.followee,...followee])
   }
 
   useEffect(() => {

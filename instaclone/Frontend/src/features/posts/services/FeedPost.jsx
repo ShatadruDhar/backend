@@ -27,3 +27,12 @@ export async function unLikePost(postId) {
   const response = await api.post("/api/posts/unlike/" + postId)
   return response.data
 }
+
+export async function getfollowers() {
+  const response=await api.get("api/user/followers")
+  return response.data
+}
+export async function getfollowee() {
+  const response=await api.get("api/user/followee")
+  return response.data
+}

@@ -3,6 +3,7 @@ import '../styles/Feed.scss'
 import Posts from '../components/Posts'
 import UseFeed from '../hooks/UseFeed'
 import Navbar from '../components/Navbar'
+import Sidebar from '../components/Sidebar'
 
 const Feed = () => {
   const { feed, handleFeed, loading, handleLike, handleUnLike } = UseFeed()
@@ -21,6 +22,7 @@ const Feed = () => {
     <div>
       <main>
         <div className="feed">
+          <Sidebar />
           <div className="nav">
             <Navbar/>
           </div>
