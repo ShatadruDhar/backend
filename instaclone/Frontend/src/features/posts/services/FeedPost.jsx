@@ -29,10 +29,10 @@ export async function unLikePost(postId) {
 }
 
 export async function getfollowers() {
-  const response=await api.get("api/user/followers")
+  const response=await api.get("/api/user/followers")
   return response.data
 }
 export async function getfollowee() {
-  const response=await api.get("api/user/followee")
+  const response=await api.get("/api/user/followee")
   return response.data
 }

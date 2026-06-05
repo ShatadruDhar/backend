@@ -32,19 +32,19 @@ const UseFeed = () => {
 
   const handleFollowers=async ()=>{
    const data=await getfollowers()
-   setFollower([data.followers,...follower])
+   setFollower([data.followers])
   }
   
   const handleFollowee=async ()=>{
    const data=await getfollowee()
-   setFollowee([data.followee,...followee])
+   setFollowee([data.followee])
   }
 
   useEffect(() => {
     handleFeed()
   }, [])
 
-  return { loading, feed, handleFeed, handleCreatePost, handleLike, handleUnLike }
+  return { loading, feed, handleFeed, handleCreatePost, handleLike, handleUnLike,handleFollowee,handleFollowers }
 }
 
 export default UseFeed
