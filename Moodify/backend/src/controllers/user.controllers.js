@@ -1,6 +1,7 @@
 const jwt=require("jsonwebtoken")
 const bcrypt=require("bcryptjs")
 const userModel=require("../models/auth.user.model")
+const blacklistModel = require("../models/blacklist")
 async function registerUser(req,res){
     const {username,email,password}=req.body
     const userExists=await userModel.findOne({
@@ -36,7 +37,7 @@ async function loginUser(req,res){
  const {username,email,password}=req.body
     const userExists=await userModel.findOne({
         $or:[{username},{email}]
-    })
+    }).select("+password")
     if(!userExists){
         return res.status(400).json({
             message:"Invalid credentials"
@@ -49,7 +50,8 @@ async function loginUser(req,res){
         })
     }
     const token=jwt.sign({
-        username:username
+        username:username,
+        id:userExists._id
     },process.env.JWT_SECRET,{
         expiresIn:"5d"
     })
@@ -64,4 +66,22 @@ async function loginUser(req,res){
     })
 }
 
-module.exports={registerUser,loginUser}
+async function getMe(req,res){
+    const user=await userModel.findOne({username:req.user.username})
+    res.status(200).json({
+        message:"User fetched successfully",
+        user
+    })
+
+}
+
+async function logout(req,res){
+    const token=req.cookies.token
+    res.clearCookie("token")
+    await blacklistModel.create({token})
+    res.status(201).json({
+        message:"user logged out successfully"
+    })
+}
+
+module.exports={registerUser,loginUser,getMe,logout}
